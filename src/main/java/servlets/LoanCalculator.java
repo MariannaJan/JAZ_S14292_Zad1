@@ -35,7 +35,7 @@ public class LoanCalculator extends HttpServlet {
 			interestRate = Double.parseDouble(request.getParameter("interestRate"));
 			fixedFee = Double.parseDouble(request.getParameter("fixedFee"));
 			String paymentType = request.getParameter("paymentType");
-			double monthlyInterestRate = interestRate/12;
+			double monthlyInterestRate = interestRate/1200;
 			
 			response.setContentType("text/html");
 			response.getWriter().println("<h1>Harmonogram splaty</h1>");
@@ -45,7 +45,7 @@ public class LoanCalculator extends HttpServlet {
 			double monthlyFixedFee=BigDecimal.valueOf(fixedFee/numofPayments).setScale(2, RoundingMode.HALF_UP).doubleValue();
 			
 			double b=1+monthlyInterestRate; //for equal payments
-			double annuity = BigDecimal.valueOf(wantedLoan*Math.pow(b,numofPayments)/Math.pow(b,numofPayments-1 )).setScale(2, RoundingMode.HALF_UP).doubleValue();
+			double annuity = BigDecimal.valueOf(wantedLoan*Math.pow(b,numofPayments)*(b-1)/(Math.pow(b,numofPayments)-1 )).setScale(2, RoundingMode.HALF_UP).doubleValue();
 			
 			for (int i=1;i<=numofPayments;i++){
 				
